@@ -25,31 +25,22 @@ def init_gpio():
 
 def counter():
   for num in range(16):
+    #print(num)
     led_on(num)
     time.sleep(0.4)
 
 def led_on(num):
-  if num%16 >= 8:
-    GPIO.output(GP_OUT4, True)
-  else:
-    GPIO.output(GP_OUT4, False)
-  if num%8 >= 4:
-    GPIO.output(GP_OUT3, True)
-  else:
-    GPIO.output(GP_OUT3, False)
-  if num%4 >= 2:
-    GPIO.output(GP_OUT2, True)
-  else:
-    GPIO.output(GP_OUT2, False)
-  if num%2 >= 1:
-    GPIO.output(GP_OUT1, True)
-  else:
-    GPIO.output(GP_OUT1, False)
+  binstr = format(num, '04b')
+  GPIO.output(GP_OUT4, int(binstr[0]))
+  GPIO.output(GP_OUT3, int(binstr[1]))
+  GPIO.output(GP_OUT2, int(binstr[2]))
+  GPIO.output(GP_OUT1, int(binstr[3]))
+  #print("{0} {1} {2} {3}".format(binstr[0], binstr[1], binstr[2], binstr[3]))
 
 
 init_gpio()
 try:
-  print("start binary counter ....")
+  print("Start binary counter ....")
   while True:
     counter()
     time.sleep(2.0)
